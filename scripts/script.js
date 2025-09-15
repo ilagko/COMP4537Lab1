@@ -1,26 +1,5 @@
 // Some help by ChatGPT
 
-const MSG = {
-  index: {
-    title: "Lab 1: JSON, Object Constructor, localStorage",
-    student: "Student name",
-    intro: "Choose a page:",
-    writer: "Writer",
-    reader: "Reader",
-  },
-  common: {
-    back: "Back to Home",
-    lastSaved: "Last saved:",
-    lastRetrieved: "Last retrieved:",
-    noNotes: "No notes yet.",
-    notePlaceholder: "Type your note here...",
-    remove: "Remove",
-    addNote: "Add Note",
-  },
-  writer: { title: "Writer", hint: "Autosaving every 2s" },
-  reader: { title: "Reader", hint: "Refreshing every 2s" },
-};
-
 function formatTime(iso) {
   if (!iso) return "—";
   try { return new Date(iso).toLocaleString(); } catch (e) { return iso; }
@@ -53,17 +32,17 @@ function markRetrieved() {
 function getLastRetrieved() { return localStorage.getItem("lastRetrieved"); }
 
 function onIndex() {
-  document.title = MSG.index.title;
+  document.title = USER_MESSAGES.index.title;
   const title = document.getElementById("title");
   const student = document.getElementById("student");
   const intro = document.getElementById("intro");
   const writerLink = document.getElementById("writerLink");
   const readerLink = document.getElementById("readerLink");
-  if (title) title.textContent = MSG.index.title;
-  if (student) student.textContent = MSG.index.student;
-  if (intro) intro.textContent = MSG.index.intro;
-  if (writerLink) writerLink.textContent = MSG.index.writer;
-  if (readerLink) readerLink.textContent = MSG.index.reader;
+  if (title) title.textContent = USER_MESSAGES.index.title;
+  if (student) student.textContent = USER_MESSAGES.index.student;
+  if (intro) intro.textContent = USER_MESSAGES.index.intro;
+  if (writerLink) writerLink.textContent = USER_MESSAGES.index.writer;
+  if (readerLink) readerLink.textContent = USER_MESSAGES.index.reader;
 }
 
 function renderWriterNotes(listEl, emptyEl, notes, onRemove) {
@@ -78,7 +57,7 @@ function renderWriterNotes(listEl, emptyEl, notes, onRemove) {
     const row = document.createElement("div");
     row.className = "note";
     const ta = document.createElement("textarea");
-    ta.placeholder = MSG.common.notePlaceholder;
+    ta.placeholder = USER_MESSAGES.common.notePlaceholder;
     ta.value = n.text;
     ta.addEventListener("input", function (e) {
       n.text = e.target.value;
@@ -86,7 +65,7 @@ function renderWriterNotes(listEl, emptyEl, notes, onRemove) {
     const btn = document.createElement("button");
     btn.className = "btn danger remove-btn";
     btn.type = "button";
-    btn.textContent = MSG.common.remove;
+    btn.textContent = USER_MESSAGES.common.remove;
     btn.addEventListener("click", function () { onRemove(n); });
     row.appendChild(ta);
     row.appendChild(btn);
@@ -103,13 +82,13 @@ function onWriter() {
   const emptyEl = document.getElementById("empty");
   const backBtn = document.getElementById("backBtn");
 
-  document.title = MSG.writer.title;
-  if (title) title.textContent = MSG.writer.title;
-  if (hint) hint.textContent = MSG.writer.hint;
-  if (addBtn) addBtn.textContent = MSG.common.addNote;
-  if (emptyEl) emptyEl.textContent = MSG.common.noNotes;
-  if (backBtn) backBtn.textContent = MSG.common.back;
-  if (status) status.textContent = MSG.common.lastSaved + " " + formatTime(getLastSaved());
+  document.title = USER_MESSAGES.writer.title;
+  if (title) title.textContent = USER_MESSAGES.writer.title;
+  if (hint) hint.textContent = USER_MESSAGES.writer.hint;
+  if (addBtn) addBtn.textContent = USER_MESSAGES.common.addNote;
+  if (emptyEl) emptyEl.textContent = USER_MESSAGES.common.noNotes;
+  if (backBtn) backBtn.textContent = USER_MESSAGES.common.back;
+  if (status) status.textContent = USER_MESSAGES.common.lastSaved + " " + formatTime(getLastSaved());
 
   let notes = loadNotes().map(function (n) { return new Note(n.id, n.text); });
 
@@ -122,7 +101,7 @@ function onWriter() {
   function saveNow() {
     const plain = notes.map(function (n) { return n.toJSON(); });
     const iso = saveNotes(plain);
-    if (status) status.textContent = MSG.common.lastSaved + " " + formatTime(iso);
+    if (status) status.textContent = USER_MESSAGES.common.lastSaved + " " + formatTime(iso);
   }
 
   renderWriterNotes(notesEl, emptyEl, notes, removeNote);
@@ -141,7 +120,7 @@ function onWriter() {
       renderWriterNotes(notesEl, emptyEl, notes, removeNote);
     }
     if (e.key === "lastSaved") {
-      if (status) status.textContent = MSG.common.lastSaved + " " + formatTime(e.newValue);
+      if (status) status.textContent = USER_MESSAGES.common.lastSaved + " " + formatTime(e.newValue);
     }
   });
 }
@@ -176,17 +155,17 @@ function onReader() {
   const notesEl = document.getElementById("notes");
   const emptyEl = document.getElementById("empty");
 
-  document.title = MSG.reader.title;
-  if (title) title.textContent = MSG.reader.title;
-  if (hint) hint.textContent = MSG.reader.hint;
-  if (backBtn) backBtn.textContent = MSG.common.back;
-  if (emptyEl) emptyEl.textContent = MSG.common.noNotes;
-  if (status) status.textContent = MSG.common.lastRetrieved + " " + formatTime(getLastRetrieved());
+  document.title = USER_MESSAGES.reader.title;
+  if (title) title.textContent = USER_MESSAGES.reader.title;
+  if (hint) hint.textContent = USER_MESSAGES.reader.hint;
+  if (backBtn) backBtn.textContent = USER_MESSAGES.common.back;
+  if (emptyEl) emptyEl.textContent = USER_MESSAGES.common.noNotes;
+  if (status) status.textContent = USER_MESSAGES.common.lastRetrieved + " " + formatTime(getLastRetrieved());
 
   function refresh() {
     const notes = loadNotes();
     markRetrieved();
-    if (status) status.textContent = MSG.common.lastRetrieved + " " + formatTime(getLastRetrieved());
+    if (status) status.textContent = USER_MESSAGES.common.lastRetrieved + " " + formatTime(getLastRetrieved());
     renderReaderNotes(notesEl, emptyEl, notes);
   }
 
@@ -204,4 +183,3 @@ document.addEventListener("DOMContentLoaded", function () {
   else if (p.endsWith("reader.html")) onReader();
   else onIndex();
 });
-
