@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reader - Lab 1</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1 id="title">Reader</h1>
+      <div class="timestamp" id="status"></div>
+    </header>
+    <main class="container">
+      <div class="toolbar">
+        <span class="muted" id="hint"></span>
+      </div>
+      <section class="panel">
+        <div id="notes" class="notes" aria-live="polite"></div>
+        <p id="empty" class="muted"></p>
+      </section>
+
+      <footer class="footer">
+        <a href="index.html" class="btn secondary" id="backBtn">Back to Home</a>
+      </footer>
+    </main>
+
+    <script src="lang/messages/en/user.js"></script>
+    <script src="scripts/common.js"></script>
+    <script src="scripts/reader.js"></script>
+  </body>
+  </html>
+

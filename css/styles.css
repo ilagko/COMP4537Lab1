@@ -1,0 +1,105 @@
+/* COMP4537 Lab 1 basic styles */
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #2563eb;
+  --danger: #ef4444;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #1f2937;
+}
+.page-header h1 {
+  margin: 0 0 .25rem 0;
+  font-size: 1.25rem;
+}
+.page-header .student-name {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.nav-links { display: flex; gap: .75rem; margin-top: 1rem; }
+
+.btn {
+  display: inline-block;
+  color: #fff;
+  background: var(--accent);
+  padding: .6rem 1rem;
+  border-radius: .5rem;
+  text-decoration: none;
+}
+
+.btn.secondary { background: #374151; }
+.btn.danger { background: var(--danger); }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.timestamp {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid #1f2937;
+  border-radius: .75rem;
+  padding: 1rem;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.note {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .5rem;
+}
+.note textarea {
+  width: 100%;
+  min-height: 100px;
+  background: #0b1022;
+  border: 1px solid #1f2937;
+  color: var(--text);
+  border-radius: .5rem;
+  padding: .65rem .75rem;
+  resize: vertical;
+}
+.note .remove-btn { height: 38px; align-self: start; }
+
+.footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.muted { color: var(--muted); }
