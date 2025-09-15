@@ -1,4 +1,0 @@
-1- Yes. Two tabs in the same browser (same site) share localStorage, so reader.html can see what writer.html saved.
-
-2- No. Different browsers keep separate localStorage, so reader.html in another browser cannot see writer.html data.
-

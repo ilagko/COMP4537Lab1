@@ -1,5 +1,5 @@
-// Some help by ChatGPT
-// USER_MESSAGES comes from lang/messages/en/user.js and holds all labels.
+// ChatGPT 5 authored the formatTime function in its entirety
+// ChatGPT 5 was used for documentation and comments for scripts/script.js
 
 // Turn an ISO string into something readable for the UI.
 function formatTime(iso) {
@@ -10,7 +10,6 @@ function formatTime(iso) {
 // Simple Note class (id + text only).
 class Note {
   constructor(id, text) {
-    // Avoid shorthand; do it the long way.
     if (id) {
       this.id = id;
     } else {
@@ -30,7 +29,6 @@ class Note {
 // Read notes array from localStorage (stored as JSON under key "notes").
 function loadNotes() {
   const raw = localStorage.getItem("notes");
-  // No ternary: return parsed array if present, otherwise empty array.
   if (raw) {
     return JSON.parse(raw);
   } else {

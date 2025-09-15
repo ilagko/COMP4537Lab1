@@ -1,9 +1,7 @@
-// Some help by ChatGPT
-
 const USER_MESSAGES = {
   index: {
     title: "Lab 1: JSON, Object Constructor, localStorage",
-    student: "Student name",
+    student: "Ila Golbaghi-Koukia",
     intro: "Choose a page:",
     writer: "Writer",
     reader: "Reader",
