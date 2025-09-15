@@ -4,7 +4,7 @@
 // Turn an ISO string into something readable for the UI.
 function formatTime(iso) {
   if (!iso) return "—";
-  try { return new Date(iso).toLocaleString(); } catch (e) { return iso; }
+  return new Date(iso).toLocaleString();
 }
 
 // Object constructor for a Note (id + text only to keep it simple).
@@ -16,10 +16,8 @@ Note.prototype.toJSON = function () { return { id: this.id, text: this.text }; }
 
 // Read notes array from localStorage (stored as JSON under key "notes").
 function loadNotes() {
-  try {
-    const x = JSON.parse(localStorage.getItem("notes"));
-    return Array.isArray(x) ? x : [];
-  } catch (e) { return []; }
+  const raw = localStorage.getItem("notes");
+  return raw ? JSON.parse(raw) : [];
 }
 // Save notes to localStorage and also remember when we last saved.
 function saveNotes(arr) {
