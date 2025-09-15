@@ -10,8 +10,17 @@ function formatTime(iso) {
 // Simple Note class (id + text only).
 class Note {
   constructor(id, text) {
-    this.id = id || (Date.now() + Math.random()).toString();
-    this.text = text || "";
+    // Avoid shorthand; do it the long way.
+    if (id) {
+      this.id = id;
+    } else {
+      this.id = (Date.now() + Math.random()).toString();
+    }
+    if (typeof text === "string") {
+      this.text = text;
+    } else {
+      this.text = "";
+    }
   }
   toJSON() {
     return { id: this.id, text: this.text };
@@ -21,7 +30,12 @@ class Note {
 // Read notes array from localStorage (stored as JSON under key "notes").
 function loadNotes() {
   const raw = localStorage.getItem("notes");
-  return raw ? JSON.parse(raw) : [];
+  // No ternary: return parsed array if present, otherwise empty array.
+  if (raw) {
+    return JSON.parse(raw);
+  } else {
+    return [];
+  }
 }
 // Save notes to localStorage and also remember when we last saved.
 function saveNotes(arr) {
@@ -74,13 +88,17 @@ class WriterApp {
     if (this.backBtn) this.backBtn.textContent = USER_MESSAGES.common.back;
     if (this.status) this.status.textContent = USER_MESSAGES.common.lastSaved + " " + formatTime(getLastSaved());
 
+    // Load any existing notes from storage into Note objects.
     this.notes = loadNotes().map(function (n) { return new Note(n.id, n.text); });
     this.render();
 
+    // Add button creates a fresh empty note.
     if (this.addBtn) this.addBtn.addEventListener("click", () => this.addNote());
 
+    // Very simple autosave loop every 2 seconds.
     setInterval(() => this.saveNow(), 2000);
 
+    // Keep this page updated if another tab changes localStorage.
     window.addEventListener("storage", (e) => {
       if (e.key === "notes") {
         this.notes = loadNotes().map(function (n) { return new Note(n.id, n.text); });
@@ -101,6 +119,7 @@ class WriterApp {
     } else {
       emptyEl.style.display = "none";
     }
+    // Build rows for each note in order.
     for (let i = 0; i < this.notes.length; i++) {
       const n = this.notes[i];
       const row = document.createElement("div");
@@ -132,6 +151,7 @@ class WriterApp {
     this.saveNow();
   }
 
+  // Save to localStorage and update the header timestamp.
   saveNow() {
     const plain = this.notes.map((n) => n.toJSON());
     const iso = saveNotes(plain);
@@ -181,7 +201,12 @@ class ReaderApp {
       const row = document.createElement("div");
       row.className = "note";
       const ta = document.createElement("textarea");
-      ta.value = n.text || "";
+      // No shorthand fallback; set value explicitly.
+      if (n.text) {
+        ta.value = n.text;
+      } else {
+        ta.value = "";
+      }
       ta.readOnly = true;
       row.appendChild(ta);
       const spacer = document.createElement("div");
